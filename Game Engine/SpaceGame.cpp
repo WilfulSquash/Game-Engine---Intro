@@ -160,7 +160,7 @@ void SpaceGame::SpawnRock()
 		0.0f,
 		15.0f
 	};
-
+	//Test
 	rockDesc.lifespan = 3.0f;
 
 	/*auto asteroid = new Actor{rockDesc};
