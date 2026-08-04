@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "Mesh.h"
 #include "MathUtils.h"
+#include "Texture.h"
 
 #include <SDL3/SDL.h>
 #include <iostream>
@@ -99,5 +100,19 @@ namespace nu {
     void Renderer::DrawRect(float x, float y, float w, float h)const {
         SDL_FRect rect = { x, y, w, h };
         SDL_RenderRect(m_renderer, &rect);
+    }
+
+    void Renderer::DrawTexture(Texture* texture, float x, float y)
+    {
+        Vector2 size = texture->GetSize();
+
+        SDL_FRect destRect;
+        destRect.x = x;
+        destRect.y = y;
+        destRect.w = /*TODO: get size x */x;
+        destRect.h = /*TODO: get size x */y;
+
+        // https://wiki.libsdl.org/SDL3/SDL_RenderTexture
+        SDL_RenderTexture(m_renderer, texture->m_texture, NULL, &destRect);
     }
 }

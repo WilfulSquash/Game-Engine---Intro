@@ -1,9 +1,10 @@
 #pragma once
 #include "../Engine/Engine.h"
+#include <memory>
 
 namespace assets {
-	extern nu::Model playerModel;
-	extern nu::Model enemyModel;
-	extern nu::Model bulletModel;
-	extern nu::Model rockModel;
+	extern shared_ptr<nu::Model> playerModel;
+	extern shared_ptr<nu::Model> enemyModel;
+	extern shared_ptr<nu::Model> bulletModel;
+	extern shared_ptr<nu::Model> rockModel;
 }

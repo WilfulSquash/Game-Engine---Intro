@@ -51,7 +51,7 @@ int main(){
         //delete objectC;
     }
 
-    cout << "\n==============Smart_Pointers==============\n";
+    cout << "\n==============Unique_Pointers==============\n";
     {
 		unique_ptr<Object> objectA = make_unique<Object>();
         cout << "objectA address: " << objectA.get()<< endl;
@@ -62,6 +62,21 @@ int main(){
 
 		objectB.reset(); // delete objectB
     }
+
+    cout << "\n==============Shared_Pointers==============\n"; 
+	shared_ptr<Object> objectC;
+    {
+		auto objectA = make_shared<Object>();
+        cout << "objectA address: " << objectA.get() << endl;
+		cout << objectA.use_count() << endl;
+		auto objectB = objectA; // copy constructor
+        cout << "objectB address: " << objectB.get() << endl;
+        cout << objectB.use_count() << endl;
+        objectC = objectA;
+        cout << "objectC address: " << objectC.get() << endl;
+        cout << objectC.use_count() << endl;
+    }
+    cout << objectC.use_count() << endl;
 
 	//return 0;
 
@@ -74,6 +89,9 @@ int main(){
     SpaceGame game;
     game.Initialize();
    
+	shared_ptr<Texture> texture = make_shared<Texture>();
+	texture->Load("Textures/LoLHealthPotion.jpg", Engine::Get().GetRenderer());
+
     //UPDATE
     bool quit = false;
     while (!quit) {
@@ -98,6 +116,7 @@ int main(){
         Engine::Get().GetRenderer().Clear();
 		
         game.Draw(Engine::Get().GetRenderer());
+        Engine::Get().GetRenderer().DrawTexture(texture.get(), 30, 30);
         
         Engine::Get().GetPS().Draw(Engine::Get().GetRenderer());
         Engine::Get().GetRenderer().Present();

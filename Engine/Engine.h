@@ -20,6 +20,7 @@
 #include "Game.h"
 #include "Audio.h"
 #include "Particle.h"
+#include "Texture.h"
 
 namespace nu {
 	class Engine {
