@@ -1,10 +1,10 @@
 #include "../Engine/Engine.h"
 #include "Player.h"
 #include "Enemy.h"
-#include <fmod.hpp>
 #include "Assets.h"
 #include "SpaceGame.h"
 
+#include <fmod.hpp>
 #include <iostream>
 #include <vector>
 #include <map>
@@ -90,7 +90,7 @@ int main(){
     game.Initialize();
    
 	shared_ptr<Texture> texture = make_shared<Texture>();
-	texture->Load("Textures/LoLHealthPotion.jpg", Engine::Get().GetRenderer());
+	//texture->Load("Textures/player.png", Engine::Get().GetRenderer());
 
     //UPDATE
     bool quit = false;
@@ -116,7 +116,7 @@ int main(){
         Engine::Get().GetRenderer().Clear();
 		
         game.Draw(Engine::Get().GetRenderer());
-        Engine::Get().GetRenderer().DrawTexture(texture.get(), 30, 30);
+        Engine::Get().GetRenderer().DrawTexture(*Resources().Get<Texture>("Textures/player.png", Engine::Get().GetRenderer()), 30, 30, 45.0f);
         
         Engine::Get().GetPS().Draw(Engine::Get().GetRenderer());
         Engine::Get().GetRenderer().Present();

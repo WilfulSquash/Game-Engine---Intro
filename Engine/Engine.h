@@ -21,6 +21,10 @@
 #include "Audio.h"
 #include "Particle.h"
 #include "Texture.h"
+#include "Resource.h"
+#include "ResourceManager.h"
+#include "Singleton.h"
+
 
 namespace nu {
 	class Engine {

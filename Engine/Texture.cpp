@@ -13,7 +13,7 @@ namespace nu
     bool Texture::Load(const std::string& filename, Renderer& renderer)
     {
         // load image onto surface
-        SDL_Surface* surface = IMG_Load("Textures/LoLHealthPotion.jpg");
+        SDL_Surface* surface = IMG_Load(filename.c_str());
         if (/*TODO: surface is null*/surface == nullptr)
         {
             std::cerr << "Could not load image: " << filename << std::endl;
@@ -30,15 +30,9 @@ namespace nu
             return false;
         }
 
-        return true;
-    }
+        //cache size
+        SDL_GetTextureSize(m_texture, &m_size.x, &m_size.y);
 
-    Vector2 Texture::GetSize()
-    {
-        Vector2 v;
-        // https://wiki.libsdl.org/SDL3/SDL_GetTextureSize
-        // TODO: SDL_GetTextureSize
-        SDL_GetTextureSize(m_texture, &v.x, &v.y);
-        return v;
+        return true;
     }
 }

@@ -5,6 +5,8 @@
 #include "Enemy.h"
 #include "Assets.h"
 
+#include <memory>
+
 using namespace nu;
 using namespace std;
 
@@ -15,17 +17,22 @@ bool SpaceGame::Initialize()
 	m_scene = new Scene();
 	m_scene->SetGame(this);
 
+	//m_titleFont = Resources().Get<Font>("Fonts/ENDOR___.ttf", 64);
+	//m_titleFont->Load("Fonts/ENDOR___.ttf", 64);
+	
+	//Resources().Get<Texture>("Textures/player.png", Engine::Get().GetRenderer());
+
 	Engine::Get().GetAudio().AddSound("music", "audio/background.mp3");
 	Engine::Get().GetAudio().PlaySound("music");
 
-	m_titleFont = new Font();
-	m_titleFont->Load("Fonts/ENDOR___.ttf", 64);
+	//m_titleFont = make_shared<Font>();
+	//m_titleFont->Load("Fonts/ENDOR___.ttf", 64);
 
-	m_titleText = new Text(m_titleFont);
+	m_titleText = new Text(Resources().Get<Font>("Fonts/ENDOR___.ttf", 64.0f));
 	m_titleText->Create(Engine::Get().GetRenderer(), "You Like RNG?", Color{ 1.0f, 1.0f, 1.0f });
 
-	m_gameOverFont = new Font();
-	m_gameOverFont->Load("Fonts/ENDOR___.ttf", 32);
+	m_gameOverFont = make_shared<Font>();
+	m_gameOverFont->Load("Fonts/ENDOR___.ttf", 32.0f);
 
 	m_scoreText = new Text(m_gameOverFont);
 	m_livesText = new Text(m_gameOverFont);
