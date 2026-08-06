@@ -9,6 +9,7 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <random> 
 
 using namespace nu;
 using namespace std;
@@ -24,61 +25,95 @@ public:
 };
 
 
+uint32_t seed = 1234;
+
+uint32_t RNG() {
+    seed = (seed * 1103515245) + 12345;
+    return seed;
+}
+
+
 int main(){
 
-	cout << "==============Object==============\n";
-    {
-        Object objectA;
-		Object objectB = objectA; // copy constructor
-		Object objectC;
-		objectC = objectA; // copy assignment 
-    }
+ //   //rand()
+ //   for (size_t i = 0; i < 10; i++) { cout << RNG() << " "; }
+	//cout << endl;
+	//seed = 1234;
+ //   for (size_t i = 0; i < 10; i++) { cout << RNG() << " "; }
+ //   cout << endl;
 
-    cout << "\n==============Raw_Pointers==============\n";
-    {
-		Object* objectA = new Object();
-		cout << "objectA address: " << objectA << endl;
+ //   //srand((unsigned int)time(NULL));
+	//SeedRandom((unsigned int)time(NULL));
+ //   for (size_t i = 0; i < 10; i++) { cout << rand() << " "; }
+ //   cout << endl;
 
-		Object* objectB = new Object(*objectA); // copy constructor
-        cout << "objectB address: " << objectB << endl;
+ //   //<random>
+	//random_device rd;
+	//cout << "random_device min: " << rd.min() << " " << endl;
+	//cout << "random_device max: " << rd.max() << " " << endl;
+	//cout << "random_device entropy: " << rd.entropy() << " " << endl;
+	////Mersenne Twister
+	//mt19937 generator(rd());
+	//uniform_int_distribution<> dist(0, 20);
+ //   for (size_t i = 0; i < 10; i++) { cout << dist(generator) << " "; }
+ //   cout << endl;
+ //   uniform_real_distribution<float> distReal(-10.0f, 20.0f);
+ //   for (size_t i = 0; i < 10; i++) { cout << distReal(generator) << " "; }
+ //   cout << endl;
+ //   return 0;
+	//cout << "==============Object==============\n";
+ //   {
+ //       Object objectA;
+	//	Object objectB = objectA; // copy constructor
+	//	Object objectC;
+	//	objectC = objectA; // copy assignment 
+ //   }
 
-        Object* objectC = nullptr;
-        objectC = objectA;
-        cout << "objectC address: " << objectC << endl;
+ //   cout << "\n==============Raw_Pointers==============\n";
+ //   {
+	//	Object* objectA = new Object();
+	//	cout << "objectA address: " << objectA << endl;
 
-        delete objectA;
-        delete objectB;
-        //delete objectC;
-    }
+	//	Object* objectB = new Object(*objectA); // copy constructor
+ //       cout << "objectB address: " << objectB << endl;
 
-    cout << "\n==============Unique_Pointers==============\n";
-    {
-		unique_ptr<Object> objectA = make_unique<Object>();
-        cout << "objectA address: " << objectA.get()<< endl;
+ //       Object* objectC = nullptr;
+ //       objectC = objectA;
+ //       cout << "objectC address: " << objectC << endl;
 
-        unique_ptr<Object> objectB;
-		objectB = move(objectA); // move constructor
-        cout << "objectB address: " << objectB.get() << endl;
+ //       delete objectA;
+ //       delete objectB;
+ //       //delete objectC;
+ //   }
 
-		objectB.reset(); // delete objectB
-    }
+ //   cout << "\n==============Unique_Pointers==============\n";
+ //   {
+	//	unique_ptr<Object> objectA = make_unique<Object>();
+ //       cout << "objectA address: " << objectA.get()<< endl;
 
-    cout << "\n==============Shared_Pointers==============\n"; 
-	shared_ptr<Object> objectC;
-    {
-		auto objectA = make_shared<Object>();
-        cout << "objectA address: " << objectA.get() << endl;
-		cout << objectA.use_count() << endl;
-		auto objectB = objectA; // copy constructor
-        cout << "objectB address: " << objectB.get() << endl;
-        cout << objectB.use_count() << endl;
-        objectC = objectA;
-        cout << "objectC address: " << objectC.get() << endl;
-        cout << objectC.use_count() << endl;
-    }
-    cout << objectC.use_count() << endl;
+ //       unique_ptr<Object> objectB;
+	//	objectB = move(objectA); // move constructor
+ //       cout << "objectB address: " << objectB.get() << endl;
 
-	//return 0;
+	//	objectB.reset(); // delete objectB
+ //   }
+
+ //   cout << "\n==============Shared_Pointers==============\n"; 
+	//shared_ptr<Object> objectC;
+ //   {
+	//	auto objectA = make_shared<Object>();
+ //       cout << "objectA address: " << objectA.get() << endl;
+	//	cout << objectA.use_count() << endl;
+	//	auto objectB = objectA; // copy constructor
+ //       cout << "objectB address: " << objectB.get() << endl;
+ //       cout << objectB.use_count() << endl;
+ //       objectC = objectA;
+ //       cout << "objectC address: " << objectC.get() << endl;
+ //       cout << objectC.use_count() << endl;
+ //   }
+ //   cout << objectC.use_count() << endl;
+
+	////return 0;
 
 
     SetWorkingDirectory("Assets");
