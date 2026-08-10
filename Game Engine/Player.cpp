@@ -4,6 +4,7 @@
 #include "Assets.h"
 #include "../Engine/Renderer.h"
 #include "SpaceGame.h"
+#include "../Engine/ResourceManager.h"
 
 void Player::Update(float dt) {
 
@@ -42,21 +43,14 @@ void Player::Update(float dt) {
 		BulletDesc bulletDesc;
 		bulletDesc.name = "Bullet";
 		bulletDesc.tag = "PlayerBullet";
-		bulletDesc.model = assets::bulletModel;
+		//bulletDesc.model = assets::bulletModel;
+		bulletDesc.texture = nu::Resources().Get<nu::Texture>("Textures/bullet.png", nu::Engine::Get().GetRenderer());
 		bulletDesc.transform = m_transform;
 		bulletDesc.speed = 1000.0f;
 		bulletDesc.lifespan = 1.0f;
 		unique_ptr<Bullet> bullet = make_unique<Bullet>(bulletDesc);
 		m_scene->AddActor(move(make_unique<Bullet>(bulletDesc)));
 	}
-
-	////Bullet Time
-	//if (nu::Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_X)) {
-	//	nu::Engine::Get().GetTime().SetTimeScale(0.5f);
-	//}
-	//else {
-	//	nu::Engine::Get().GetTime().SetTimeScale(1.0f);
-	//}
 
 	Actor::Update(dt);
 }

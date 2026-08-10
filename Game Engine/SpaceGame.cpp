@@ -89,7 +89,7 @@ void SpaceGame::Update(float dt)
 
 void SpaceGame::Draw(nu::Renderer& renderer)
 {
-	//renderer.DrawTexture(*Resources().Get<Texture>("Textures/background.png", Engine::Get().GetRenderer()), 500, 500);
+	renderer.DrawTexture(*Resources().Get<Texture>("Textures/background.png", Engine::Get().GetRenderer()), 1, 1, 0.0f, 25.0f);
 	switch (m_gameState)
 	{
 	case SpaceGame::GameState::Title:
@@ -161,14 +161,15 @@ void SpaceGame::SpawnRock()
 {
 	ActorDesc rockDesc;
 	rockDesc.name = "Rock";
-	rockDesc.model = assets::rockModel;
+	//rockDesc.model = assets::rockModel;
+	rockDesc.texture = Resources().Get<Texture>("Textures/asteroid.png", Engine::Get().GetRenderer());
 	rockDesc.transform = Transform{
 		Vector2{
 			RandomFloat((float)Engine::Get().GetRenderer().GetWidth()),
 			RandomFloat((float)Engine::Get().GetRenderer().GetHeight())
 		},
 		0.0f,
-		15.0f
+		1.0f
 	};
 	rockDesc.lifespan = 3.0f;
 

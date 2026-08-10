@@ -10,113 +10,97 @@
 #include <map>
 #include <memory>
 #include <random> 
+#include <fstream>
 
 using namespace nu;
 using namespace std;
 
 
-class Object {
-public:
-    Object() { cout << "constructor\n"; }
-	~Object() { cout << "destructor\n"; }
-
-	Object(const Object& object) { cout << "copy constructor\n"; }
-	Object& operator = (const Object& object) { cout << "copy assignment\n"; return *this; }
-};
-
-
-uint32_t seed = 1234;
-
-uint32_t RNG() {
-    seed = (seed * 1103515245) + 12345;
-    return seed;
-}
-
-
 int main(){
 
- //   //rand()
- //   for (size_t i = 0; i < 10; i++) { cout << RNG() << " "; }
-	//cout << endl;
-	//seed = 1234;
- //   for (size_t i = 0; i < 10; i++) { cout << RNG() << " "; }
- //   cout << endl;
-
- //   //srand((unsigned int)time(NULL));
-	//SeedRandom((unsigned int)time(NULL));
- //   for (size_t i = 0; i < 10; i++) { cout << rand() << " "; }
- //   cout << endl;
-
- //   //<random>
-	//random_device rd;
-	//cout << "random_device min: " << rd.min() << " " << endl;
-	//cout << "random_device max: " << rd.max() << " " << endl;
-	//cout << "random_device entropy: " << rd.entropy() << " " << endl;
-	////Mersenne Twister
-	//mt19937 generator(rd());
-	//uniform_int_distribution<> dist(0, 20);
- //   for (size_t i = 0; i < 10; i++) { cout << dist(generator) << " "; }
- //   cout << endl;
- //   uniform_real_distribution<float> distReal(-10.0f, 20.0f);
- //   for (size_t i = 0; i < 10; i++) { cout << distReal(generator) << " "; }
- //   cout << endl;
- //   return 0;
-	//cout << "==============Object==============\n";
- //   {
- //       Object objectA;
-	//	Object objectB = objectA; // copy constructor
-	//	Object objectC;
-	//	objectC = objectA; // copy assignment 
- //   }
-
- //   cout << "\n==============Raw_Pointers==============\n";
- //   {
-	//	Object* objectA = new Object();
-	//	cout << "objectA address: " << objectA << endl;
-
-	//	Object* objectB = new Object(*objectA); // copy constructor
- //       cout << "objectB address: " << objectB << endl;
-
- //       Object* objectC = nullptr;
- //       objectC = objectA;
- //       cout << "objectC address: " << objectC << endl;
-
- //       delete objectA;
- //       delete objectB;
- //       //delete objectC;
- //   }
-
- //   cout << "\n==============Unique_Pointers==============\n";
- //   {
-	//	unique_ptr<Object> objectA = make_unique<Object>();
- //       cout << "objectA address: " << objectA.get()<< endl;
-
- //       unique_ptr<Object> objectB;
-	//	objectB = move(objectA); // move constructor
- //       cout << "objectB address: " << objectB.get() << endl;
-
-	//	objectB.reset(); // delete objectB
- //   }
-
- //   cout << "\n==============Shared_Pointers==============\n"; 
-	//shared_ptr<Object> objectC;
- //   {
-	//	auto objectA = make_shared<Object>();
- //       cout << "objectA address: " << objectA.get() << endl;
-	//	cout << objectA.use_count() << endl;
-	//	auto objectB = objectA; // copy constructor
- //       cout << "objectB address: " << objectB.get() << endl;
- //       cout << objectB.use_count() << endl;
- //       objectC = objectA;
- //       cout << "objectC address: " << objectC.get() << endl;
- //       cout << objectC.use_count() << endl;
- //   }
- //   cout << objectC.use_count() << endl;
-
-	////return 0;
-
-
     SetWorkingDirectory("Assets");
+
+     /*   //Read file (input file)
+        ifstream file("data/test.txt");
+     {
+        if (file.is_open()) {
+            string str;
+            while (getline(file, str)) {
+			    cout << str << endl;
+            }
+		}
+		else { cout << "Failed to open file" << endl; }
+        file.close();
+    }
+
+    {
+        //Read file (output file)
+        ofstream file("data/test.txt", ios::app);
+        if (file.is_open()) {
+            file << "Testing More\n";
+        }
+    }
+
+    {
+        //Read / Write (input/output)
+        fstream file("data/test.txt", ios::in | ios::out | ios::app);
+        if (file.is_open()) {
+            //input
+            file << "Add a line\n";
+            file.seekg(0);
+            //output
+            string str;
+            while (getline(file, str)) {
+                cout << str << endl;
+            }
+        }
+    }
+
+    {
+        string name;
+        int score;
+        bool isAlive;
+
+        //save game data
+        bool save = false;
+        if (save == true) {
+			name = "Player1";
+			score = 100;
+			isAlive = true;
+
+            //save game data
+            ofstream file("data/game.txt");
+            if (file.is_open()) {
+                file << name << "\n";
+                file << score << "\n";
+				file << boolalpha << isAlive << "\n";
+            }
+        }
+
+        //load game data
+        bool load = true;
+        if (load == true) {
+            //read file
+            ifstream file("data/game.txt");
+            if (file.is_open()) {
+                getline(file, name);
+
+                string str;
+                getline(file, str);
+
+                score = stoi(str);
+
+                //file >> score;
+                file >>boolalpha >> isAlive;
+            }
+        }
+        //display game data
+        cout << name << endl;
+        cout << score << endl;
+        cout << boolalpha << isAlive << endl;
+    }
+
+    return 0;*/
 
     //INITIALIZATION
     Engine::Get().Initialize();
@@ -151,7 +135,8 @@ int main(){
         Engine::Get().GetRenderer().Clear();
 		
         game.Draw(Engine::Get().GetRenderer());
-        Engine::Get().GetRenderer().DrawTexture(*Resources().Get<Texture>("Textures/player.png", Engine::Get().GetRenderer()), 30, 30, 45.0f);
+		//Puts Player ship in top left corner of screen
+        //Engine::Get().GetRenderer().DrawTexture(*Resources().Get<Texture>("Textures/player.png", Engine::Get().GetRenderer()), 30, 30, 45.0f);
         
         Engine::Get().GetPS().Draw(Engine::Get().GetRenderer());
         Engine::Get().GetRenderer().Present();
