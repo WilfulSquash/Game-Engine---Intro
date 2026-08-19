@@ -25,6 +25,8 @@
 #include "ResourceManager.h"
 #include "Singleton.h"
 #include "Json.h"
+#include "StringUtils.h"
+#include "Factory.h"
 
 
 namespace nu {

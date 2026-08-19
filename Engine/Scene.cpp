@@ -1,16 +1,60 @@
 #include "pch.h"
 #include "Scene.h"
 #include "Actor.h"
+#include "Factory.h"
+#include "Components/ColliderComponent.h"
+
 
 namespace nu {
 	void Scene::AddActor(unique_ptr<Actor> actor) {
 		actor->m_scene = this;
 		m_pendingActors.push_back(move(actor)); 
 	}
-	void Scene::RemoveAllActors()
-	{
-		m_actors.clear();
+	void Scene::RemoveAllActors(){m_actors.clear();}
+
+	bool Scene::Load(const string& sceneName){
+		nu::json::document_t document;
+		if (nu::json::Load("Data/scene.json", document)) {
+			if (JSON_HAS_NAME(document, "actors")) {
+				for (auto& actorValue : JSON_GET_NAME(document, "actors").GetArray()) {
+
+					string typeName;
+					JSON_READ_NAME(actorValue, "type", typeName);
+
+					auto actor = Factory::Instance().Create<Actor>(typeName);
+					actor->Read(actorValue);
+
+					bool prototype = false;
+					JSON_READ(actorValue, prototype);
+
+					if (prototype) { 
+						string name;
+						JSON_READ(actorValue, name);
+						Factory::Instance().RegisterProtoype<Actor>(name, move(actor)); 
+					}
+					else {
+						AddActor(move(actor));
+					}
+				}
+			}
+		}
+		else { return false; }
+
+		//	string type;
+		//	JSON_READ(document, type);
+//
+		//	auto actor = Factory::Instance().Create<Actor>(type);
+		//	actor->Read(document);
+		//	cout << actor->GetName() << endl;
+		//	cout << actor->GetTag() << endl;
+		//	cout << actor->GetTransform().rotation << endl;
+//
+		//	Factory::Instance().RegisterProtoype<Actor>("PlayerPrototype", move(actor));
+		//}
+
+		return true;
 	}
+
 	void Scene::Update(float dt) {
 		//Update Actors
 		for (auto& actor : m_actors) {
@@ -24,9 +68,7 @@ namespace nu {
 		std::erase_if(m_actors, [](auto& actor) {return actor->m_destroyed; });
 
 		//Add Pending Actors
-		for (auto& actor : m_pendingActors) {
-			m_actors.push_back(move(actor));
-		}
+		for (auto& actor : m_pendingActors) { m_actors.push_back(move(actor));}
 		m_pendingActors.clear();
 	};
 
@@ -43,9 +85,13 @@ namespace nu {
 			for (auto& actorB : m_actors) {
 				if (actorA == actorB || actorA-> m_destroyed || actorB->m_destroyed) continue;
 
+				auto colliderA = actorA->GetComponent<ColliderComponent>();
+				auto colliderB = actorB->GetComponent<ColliderComponent>();
+
+				if (!colliderA || !colliderB) continue;
+
 				//Check Collision
-				float distance = (actorA->m_transform.position - actorB->m_transform.position).Length();
-				if (distance <= actorA->GetRadius() + actorB->GetRadius()) {
+				if (colliderA->CheckCollision(*colliderB)) {
 					actorA->OnCollision(actorB.get());
 					actorB->OnCollision(actorA.get());
 				}

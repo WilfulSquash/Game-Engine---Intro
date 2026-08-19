@@ -12,6 +12,10 @@ public:
 
 	void Update(float dt);
 
+	void Read(const nu::json::value_t& value) override;
+
+	CLASS_PROTOTYPE(Bullet)
+
 private:
 	int m_ammo = 0;
 	float m_speed = 800.0f;

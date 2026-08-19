@@ -16,17 +16,10 @@ bool SpaceGame::Initialize()
 
 	m_scene = new Scene();
 	m_scene->SetGame(this);
-
-	//m_titleFont = Resources().Get<Font>("Fonts/ENDOR___.ttf", 64);
-	//m_titleFont->Load("Fonts/ENDOR___.ttf", 64);
-	
-	//Resources().Get<Texture>("Textures/player.png", Engine::Get().GetRenderer());
+	m_scene->Load("data/scene.json");
 
 	Engine::Get().GetAudio().AddSound("music", "audio/background.mp3");
 	Engine::Get().GetAudio().PlaySound("music");
-
-	//m_titleFont = make_shared<Font>();
-	//m_titleFont->Load("Fonts/ENDOR___.ttf", 64);
 
 	m_titleText = new Text(Resources().Get<Font>("Fonts/ENDOR___.ttf", 64.0f));
 	m_titleText->Create(Engine::Get().GetRenderer(), "You Like RNG?", Color{ 1.0f, 1.0f, 1.0f });
@@ -124,6 +117,11 @@ void SpaceGame::OnPlayerDead()
 
 void SpaceGame::SpawnPlayer()
 {
+	auto actor = Factory::Instance().Create<Actor>("PlayerPrototype");
+	m_scene->AddActor(move(actor));
+
+	
+	/*
 	PlayerDesc playerDesc;
 	playerDesc.name = "Player";
 	//playerDesc.model = assets::playerModel;
@@ -135,12 +133,18 @@ void SpaceGame::SpawnPlayer()
 
 	unique_ptr<Player> player = make_unique<Player>(playerDesc);
 	m_scene->AddActor(move(player));
+	*/
 }
 
 void SpaceGame::SpawnEnemy()
 {
+	auto actor = Factory::Instance().Create<Actor>("EnemyPrototype");
+	actor->SetTransform(Transform{ Vector2{RandomFloat((float)Engine::Get().GetRenderer().GetWidth()), RandomFloat((float)Engine::Get().GetRenderer().GetHeight())}, 0.0f, 1.0f });
+	m_scene->AddActor(move(actor));
+	/*
 	EnemyDesc enemyDesc;
 	enemyDesc.name = "Enemy";
+	enemyDesc.tag = "Enemy";
 	//enemyDesc.model = assets::enemyModel;
 	enemyDesc.texture = Resources().Get<Texture>("Textures/enemy.png", Engine::Get().GetRenderer());
 	enemyDesc.transform = Transform{ Vector2{RandomFloat((float)Engine::Get().GetRenderer().GetWidth()), RandomFloat((float)Engine::Get().GetRenderer().GetHeight())}, 0.0f, 1.0f };
@@ -151,16 +155,18 @@ void SpaceGame::SpawnEnemy()
 	//enemyDesc.transform = Transform{ Vector2{RandomFloat((float)Engine::Get().GetRenderer().GetWidth()), RandomFloat((float)Engine::Get().GetRenderer().GetHeight())}, 0.0f, 15.0f };
 	unique_ptr<Enemy> enemy = make_unique<Enemy>(enemyDesc);
 	m_scene->AddActor(move(enemy));
+	*/
 }
-
-struct RockDesc : public nu::ActorDesc {
-	float speed = 2000.0f;
-};
 
 void SpaceGame::SpawnRock()
 {
+	auto actor = Factory::Instance().Create<Actor>("AsteroidPrototype");
+	actor->SetTransform(Transform{ Vector2{RandomFloat((float)Engine::Get().GetRenderer().GetWidth()), RandomFloat((float)Engine::Get().GetRenderer().GetHeight())}, 0.0f, 1.0f });
+	m_scene->AddActor(move(actor));
+	/*
 	ActorDesc rockDesc;
 	rockDesc.name = "Rock";
+	rockDesc.tag = "Asteroid";
 	//rockDesc.model = assets::rockModel;
 	rockDesc.texture = Resources().Get<Texture>("Textures/asteroid.png", Engine::Get().GetRenderer());
 	rockDesc.transform = Transform{
@@ -176,7 +182,7 @@ void SpaceGame::SpawnRock()
 	/*auto asteroid = new Actor{rockDesc};
 
 	m_scene->AddActor(asteroid);
-	*/
 	unique_ptr<Actor> asteroid = make_unique<Actor>(rockDesc);
 	m_scene->AddActor(move(asteroid));
+	*/
 }

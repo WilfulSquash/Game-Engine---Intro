@@ -5,6 +5,9 @@
 #include "../Engine/Renderer.h"
 #include "SpaceGame.h"
 #include "../Engine/ResourceManager.h"
+#include "../Engine/Factory.h"
+
+FACTORY_REGISTER(Player)
 
 void Player::Update(float dt) {
 
@@ -40,16 +43,22 @@ void Player::Update(float dt) {
 		
 		//nu::Engine::Get().GetAudio().PlaySound("shoot");
 
-		BulletDesc bulletDesc;
-		bulletDesc.name = "Bullet";
-		bulletDesc.tag = "PlayerBullet";
-		//bulletDesc.model = assets::bulletModel;
-		bulletDesc.texture = nu::Resources().Get<nu::Texture>("Textures/bullet.png", nu::Engine::Get().GetRenderer());
-		bulletDesc.transform = m_transform;
-		bulletDesc.speed = 1000.0f;
-		bulletDesc.lifespan = 1.0f;
-		unique_ptr<Bullet> bullet = make_unique<Bullet>(bulletDesc);
-		m_scene->AddActor(move(make_unique<Bullet>(bulletDesc)));
+		auto bullet = nu::Factory::Instance().Create<Bullet>("BulletPrototype");
+   		bullet->SetTransform(m_transform);
+		bullet->SetScale(2.0f);
+		bullet->SetTag("PlayerBullet");
+		m_scene->AddActor(move(bullet));
+
+		//BulletDesc bulletDesc;
+		//bulletDesc.name = "Bullet";
+		//bulletDesc.tag = "PlayerBullet";
+		////bulletDesc.model = assets::bulletModel;
+		//bulletDesc.texture = nu::Resources().Get<nu::Texture>("Textures/bullet.png", nu::Engine::Get().GetRenderer());
+		//bulletDesc.transform = m_transform;
+		//bulletDesc.speed = 1000.0f;
+		//bulletDesc.lifespan = 1.0f;
+		//unique_ptr<Bullet> bullet = make_unique<Bullet>(bulletDesc);
+		//m_scene->AddActor(move(make_unique<Bullet>(bulletDesc)));
 	}
 
 	Actor::Update(dt);
@@ -60,12 +69,19 @@ void Player::Draw(const nu::Renderer& renderer) const {
 
 void Player::OnCollision(Actor* other)
 {
-	if (other->GetName() == "Enemy") { 
+	if (other->GetTag() == "Enemy") { 
 		SetDestroyed(); 
 		((SpaceGame*)m_scene->GetGame())->OnPlayerDead();
 	}
-	if (other->GetName() == "Rock") {
+	if (other->GetTag() == "Asteroid") {
 		SetDestroyed();
 		((SpaceGame*)m_scene->GetGame())->OnPlayerDead();
 	}
+}
+
+void Player::Read(const nu::json::value_t& value)
+{
+	Actor::Read(value);
+
+	JSON_READ_NAME(value, "speed", m_speed);
 }
