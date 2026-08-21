@@ -8,6 +8,7 @@
 
 namespace nu {
     FACTORY_REGISTER(Actor)
+    FACTORY_REGISTER_AS(Actor, "Asteroid")
 
     Actor::Actor(const Actor& other) :
         //copy stuff

@@ -16,6 +16,17 @@
     };                                                              \
     static Register##classname registerInstance;
 
+#define FACTORY_REGISTER_AS(classname, name)                        \
+    class Register##classname##As                                   \
+    {                                                               \
+    public:                                                         \
+        Register##classname##As()                                   \
+        {                                                           \
+            nu::Factory::Instance().Register<classname>(name);       \
+        }                                                           \
+    };                                                              \
+    static Register##classname##As register##classname##As;
+
 using namespace std;
 
 namespace nu {

@@ -19,10 +19,6 @@ using namespace std;
 int main(){
     //DON'T F***ING TOUCH THIS
     SetWorkingDirectory("Assets");
-	//Factory::Instance().Register<Actor>("Player");
-	//Factory::Instance().Register<Actor>("Enemy");
-	//Factory::Instance().Register<Actor>("Bullet");
-	Factory::Instance().Register<Actor>("Asteroid");
     
     //INITIALIZATION
     Engine::Get().Initialize();

@@ -83,6 +83,7 @@
       "tag": "Asteroid",
       "active": true,
       "lifespan": 3.0,
+      "speed": 0,
       "texture": "Textures/asteroid.png",
       "transform": {
         "rotation": 0,

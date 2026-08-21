@@ -27,6 +27,7 @@
 #include "Json.h"
 #include "StringUtils.h"
 #include "Factory.h"
+#include "Physics.h"
 
 
 namespace nu {
@@ -44,6 +45,7 @@ namespace nu {
 		Time& GetTime() { return m_time; }
 		Audio& GetAudio() { return m_audio; }
 		ParticleSystem& GetPS() { return m_particleSystem; }
+		Physics& GetPhysics() { return m_physics; }
 
 	private:
 		Input m_input;
@@ -56,5 +58,7 @@ namespace nu {
 		Audio m_audio;
 
 		ParticleSystem m_particleSystem;
+
+		Physics m_physics;
 	};
 }
