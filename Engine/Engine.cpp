@@ -3,7 +3,6 @@
 #include "pch.h"
 #include "framework.h"
 #include "Engine.h"
-#include <iostream>
 
 namespace nu {
 	bool Engine::Initialize() {

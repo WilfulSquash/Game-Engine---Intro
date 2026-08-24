@@ -3,11 +3,6 @@
 #include "Vector3.h"
 #include "Renderer.h"
 
-#include <SDL3_ttf/SDL_ttf.h>
-#include <iostream>
-#include <assert.h>
-
-
 using namespace std;
 namespace nu {
 	Text::~Text() {

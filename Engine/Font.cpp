@@ -2,8 +2,6 @@
 #include "Font.h"
 #include "SDL3_ttf/SDL_ttf.h"
 
-#include <iostream>
-
 using namespace std;
 namespace nu {
 	Font::~Font() {

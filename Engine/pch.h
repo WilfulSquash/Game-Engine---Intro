@@ -10,4 +10,24 @@
 // add headers that you want to pre-compile here
 #include "framework.h"
 
+//Standard Library
+#include <array>
+#include <vector>
+#include <list>
+#include <map>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <memory>
+#include <algorithm>
+#include <assert.h>
+
+//Third Party
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
+#include <SDL3_ttf/SDL_ttf.h>
+#include <fmod.h>
+#include <fmod_errors.h>
+#include <rapidjson/istreamwrapper.h>
+
 #endif //PCH_H

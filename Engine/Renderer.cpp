@@ -5,9 +5,6 @@
 #include "Mesh.h"
 #include "MathUtils.h"
 #include "Texture.h"
-
-#include <SDL3/SDL.h>
-#include <iostream>
 #include "Input.h"
 
 namespace nu {
