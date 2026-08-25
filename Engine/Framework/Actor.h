@@ -1,9 +1,9 @@
 #pragma once
 #include "Object.h"
-#include "Transform.h"
-#include "Model.h"
-#include "Resource.h"
-#include "Component.h"
+#include "../Engine/Math/Transform.h"
+#include "../Engine/Renderer/Model.h"
+#include "../Engine/Resources/Resource.h"
+#include "../Engine/Components/Component.h"
 #include <string>
 #include <memory>
 

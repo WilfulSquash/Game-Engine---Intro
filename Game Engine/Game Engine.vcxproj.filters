@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{10dea53b-107a-46b0-8309-755cf8b66d68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Animations">
+      <UniqueIdentifier>{af99c8e8-02c2-4bfb-b7f7-ae539d203715}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Scenes">
+      <UniqueIdentifier>{885f0d24-433d-41f4-8227-4452fd9c053a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -52,8 +61,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Build\Assets\Animations\bat_idle.json">
+      <Filter>Assets\Animations</Filter>
+    </None>
     <None Include="..\Build\Assets\Data\scene.json">
-      <Filter>Resource Files</Filter>
+      <Filter>Assets\Scenes</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -1,33 +1,33 @@
 #pragma once
 
-#include "Renderer.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Transform.h"
-#include "Actor.h"
-#include "Random.h"
-#include "Input.h"
+#include "Renderer/Renderer.h"
+#include "Math/Vector2.h"
+#include "Math/Vector3.h"
+#include "Math/Transform.h"
+#include "Framework/Actor.h"
+#include "Core/Random.h"
+#include "Input/Input.h"
 #include <iostream>
 #include <vector>
-#include "GameTime.h"
-#include "MathUtils.h"
-#include "Scene.h"
-#include "File.h"
-#include "Model.h"
-#include "Mesh.h"
-#include "Text.h"
-#include "Font.h"
-#include "Game.h"
-#include "Audio.h"
-#include "Particle.h"
-#include "Texture.h"
-#include "Resource.h"
-#include "ResourceManager.h"
-#include "Singleton.h"
-#include "Json.h"
-#include "StringUtils.h"
-#include "Factory.h"
-#include "Physics.h"
+#include "Core/GameTime.h"
+#include "Math/MathUtils.h"
+#include "Framework/Scene.h"
+#include "Core/File.h"
+#include "Renderer/Model.h"
+#include "Renderer/Mesh.h"
+#include "Renderer/Text.h"
+#include "Renderer/Font.h"
+#include "Framework/Game.h"
+#include "Audio/Audio.h"
+#include "Renderer/Particle.h"
+#include "Renderer/Texture.h"
+#include "Resources/Resource.h"
+#include "Resources/ResourceManager.h"
+#include "Core/Singleton.h"
+#include "Serialization/Json.h"
+#include "Core/StringUtils.h"
+#include "Core/Factory.h"
+#include "Physics/Physics.h"
 
 
 namespace nu {
@@ -59,6 +59,6 @@ namespace nu {
 
 		ParticleSystem m_particleSystem;
 
-		Physics m_physics;
+		Physics m_physics{};
 	};
 }

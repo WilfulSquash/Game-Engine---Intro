@@ -2,10 +2,10 @@
 #include "../Engine/Engine.h"
 #include "Bullet.h"
 #include "Assets.h"
-#include "../Engine/Renderer.h"
+#include "../Engine/Renderer/Renderer.h"
 #include "SpaceGame.h"
-#include "../Engine/ResourceManager.h"
-#include "../Engine/Factory.h"
+#include "../Engine/Resources/ResourceManager.h"
+#include "../Engine/Core/Factory.h"
 
 FACTORY_REGISTER(Player)
 

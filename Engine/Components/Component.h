@@ -1,5 +1,5 @@
 #pragma once
-#include "Object.h"
+#include "../Engine/Framework/Object.h"
 
 namespace nu {
 

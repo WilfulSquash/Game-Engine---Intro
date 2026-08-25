@@ -27,6 +27,7 @@ namespace nu {
 		friend class Text;
 		friend class Texture;
 		void DrawTexture(const class Texture& texture, float x, float y, float angle = 0.0f, float scale = 1.0f, bool flipH = false) const;
+		void DrawTexture(const class Texture& texture, const struct Rect& source,float x, float y, float angle = 0.0f, float scale = 1.0f, bool flipH = false) const;
 
 	private:
 		SDL_Window* m_window = nullptr;

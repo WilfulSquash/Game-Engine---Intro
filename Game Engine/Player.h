@@ -1,5 +1,6 @@
 #pragma once
-#include "../Engine/Actor.h"
+#include "../Engine/Framework/Actor.h"
+#include "../Engine/Serialization/Json.h"
 
 struct PlayerDesc : public nu::ActorDesc{
 	float speed = 2000.0f;
