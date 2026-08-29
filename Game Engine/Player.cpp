@@ -6,6 +6,7 @@
 #include "SpaceGame.h"
 #include "../Engine/Resources/ResourceManager.h"
 #include "../Engine/Core/Factory.h"
+#include "../Engine/Components/PhysicsComponent.h"
 
 FACTORY_REGISTER(Player)
 
@@ -19,11 +20,21 @@ void Player::Update(float dt) {
 	float rotate = 0.0f;
 	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -180.0f;
 	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)) rotate = +180.0f;
-	SetRotation(m_transform.rotation + rotate * dt);
 
-	nu::Vector2 forward{1, 0};
-	nu::Vector2 velocity = forward.Rotate(m_transform.rotation * nu::DegToRad) * thrust;
-	AddVelocity(velocity * dt);
+	nu::PhysicsComponent* physicsComponent = GetComponent<nu::PhysicsComponent>();
+	if (physicsComponent) {
+		nu::Vector2 forward{1, 0};
+		nu::Vector2 force = forward.Rotate(m_transform.rotation * nu::DegToRad) * thrust;
+
+		physicsComponent->ApplyForce(force);
+		physicsComponent->ApplyTorque(rotate);
+
+		//MISSING CODE
+		nu::Vector2 position = physicsComponent->GetPosition();
+		position.x = nu::Wrap(0.0f, 1280.0f, position.x);
+		position.y = nu::Wrap(0.0f, 1024.0f, position.y);
+		physicsComponent->SetPosition(position);
+	}
 
 	//Particles
 	if (thrust) {
@@ -48,17 +59,6 @@ void Player::Update(float dt) {
 		bullet->SetScale(2.0f);
 		bullet->SetTag("PlayerBullet");
 		m_scene->AddActor(move(bullet));
-
-		//BulletDesc bulletDesc;
-		//bulletDesc.name = "Bullet";
-		//bulletDesc.tag = "PlayerBullet";
-		////bulletDesc.model = assets::bulletModel;
-		//bulletDesc.texture = nu::Resources().Get<nu::Texture>("Textures/bullet.png", nu::Engine::Get().GetRenderer());
-		//bulletDesc.transform = m_transform;
-		//bulletDesc.speed = 1000.0f;
-		//bulletDesc.lifespan = 1.0f;
-		//unique_ptr<Bullet> bullet = make_unique<Bullet>(bulletDesc);
-		//m_scene->AddActor(move(make_unique<Bullet>(bulletDesc)));
 	}
 
 	Actor::Update(dt);

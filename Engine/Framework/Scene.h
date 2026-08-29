@@ -11,7 +11,7 @@ namespace nu{
 	class Scene{
 	public:
 		void AddActor(unique_ptr<Actor> actor);
-		void RemoveAllActors();
+		void RemoveAllActors(bool force = false);
 
 		bool Load(const string& sceneName);
 
@@ -30,7 +30,7 @@ namespace nu{
 
 		class Game* m_game{nullptr};
 
-		void UpdateCollisions();
+		//void UpdateCollisions();
 	};
 
 	template<typename T>

@@ -2,6 +2,7 @@
 #include "../Engine/Engine.h"
 #include "Player.h"
 #include "SpaceGame.h"
+#include "../Engine/Components/PhysicsComponent.h"
 #include <iostream>
 
 FACTORY_REGISTER(Enemy)
@@ -11,13 +12,17 @@ void Enemy::Update(float dt) {
 
 	Player* player = m_scene->GetActorByName<Player>("PlayerPrototype");
 	if (player) {
-		nu::Vector2 direction = player->GetTransform().position - m_transform.position;
-		float rotation = direction.Angle();
-		SetRotation(rotation * nu::RadToDeg);
 
-		nu::Vector2 forward{ 1, 0 };
-		forward = forward.Rotate(m_transform.rotation * nu::DegToRad);
-		AddVelocity(forward * m_speed * dt);
+		auto physicsComponent = GetComponent<nu::PhysicsComponent>();
+		if (physicsComponent) {
+			nu::Vector2 forward{ 1, 0 };
+			nu::Vector2 force = forward.Rotate(m_transform.rotation * nu::DegToRad) * m_speed;
+			physicsComponent->ApplyForce(force);
+
+			nu::Vector2 direction = player->GetTransform().position - m_transform.position;
+			float rotation = direction.Angle();
+			SetRotation(rotation * nu::RadToDeg);
+		}
 	}
 
 	//Particles

@@ -3,6 +3,7 @@
 #include "Core/File.h"
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
+#include <vector>
 
 namespace nu::json
 {
@@ -53,6 +54,20 @@ namespace nu::json
 
         // get the data
         data = value[name.c_str()].GetInt();
+
+        return true;
+    }
+    bool Read(const value_t& value, const std::string& name, unsigned int& data, bool required)
+    {
+        // check if the value has the "<name>" and the correct data type
+        if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsUint())
+        {
+            if (required) std::cerr << "Could not read JSON value (unsigned int):" << name << std::endl;
+            return false;
+        }
+
+        // get the data
+        data = value[name.c_str()].GetUint();
 
         return true;
     }
@@ -150,6 +165,34 @@ namespace nu::json
         data.x = array[0].GetFloat();
         data.y = array[1].GetFloat();
         data.z = array[2].GetFloat();
+
+        return true;
+    }
+
+    bool Read(const value_t& value, const std::string& name, std::vector<int>& data, bool required)
+    {
+        // Check if the value exists, is an array
+        if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsArray())
+        {
+            if (required)std::cerr << "Could not read JSON value (std::vector<int>): " << name << std::endl;
+            return false;
+        }
+
+        // Get JSON array
+        auto& array = value[name.c_str()];
+
+        // Make sure each element is a number
+        for (rapidjson::SizeType i = 0; i < array.Size(); i++)
+        {
+            if (!array[i].IsNumber())
+            {
+                if (required)std::cerr << "Could not read JSON value (std::vector<int>): " << name << std::endl;
+                return false;
+            }
+            // Copy values into Vector3
+            data.push_back(array[i].GetInt());
+        }
+
 
         return true;
     }

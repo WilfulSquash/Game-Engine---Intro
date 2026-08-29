@@ -8,13 +8,16 @@ namespace nu {
 	public:
 		bool Load(const string& filename, class Renderer& renderer);
 		Rect GetFrameRect(unsigned int Frame);
-	private:
-		int m_numColumns = 0;
-		int m_numRows = 0;
-		int m_startFrame = 0;
-		int m_totalFrames = 0;
 
-		Vector2 m_frameSize{ 0, 0 };
+		unsigned int GetTotalFrames() { return m_totalFrames; }
+		res_t<class Texture> GetTexture() { return m_texture; }
+	private:
+		unsigned int m_numColumns = 0;
+		unsigned int m_numRows = 0;
+		unsigned int m_startFrame = 0;
+		unsigned int m_totalFrames = 0;
+
+		Vector2 m_frameSize{ 0.0f, 0.0f };
 		res_t<class Texture> m_texture;
 	};
 }

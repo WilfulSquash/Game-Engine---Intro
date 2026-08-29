@@ -10,11 +10,14 @@ namespace nu {
 		actor->m_scene = this;
 		m_pendingActors.push_back(move(actor)); 
 	}
-	void Scene::RemoveAllActors(){m_actors.clear();}
+
+	void Scene::RemoveAllActors(bool force){ 
+		std::erase_if(m_actors, [force](auto& actor) {return !actor->GetPersistent() || force; });
+	}
 
 	bool Scene::Load(const string& sceneName){
 		nu::json::document_t document;
-		if (nu::json::Load("Data/scene.json", document)) {
+		if (nu::json::Load(sceneName, document)) {
 			if (JSON_HAS_NAME(document, "actors")) {
 				for (auto& actorValue : JSON_GET_NAME(document, "actors").GetArray()) {
 
@@ -40,18 +43,6 @@ namespace nu {
 		}
 		else { return false; }
 
-		//	string type;
-		//	JSON_READ(document, type);
-//
-		//	auto actor = Factory::Instance().Create<Actor>(type);
-		//	actor->Read(document);
-		//	cout << actor->GetName() << endl;
-		//	cout << actor->GetTag() << endl;
-		//	cout << actor->GetTransform().rotation << endl;
-//
-		//	Factory::Instance().RegisterProtoype<Actor>("PlayerPrototype", move(actor));
-		//}
-
 		return true;
 	}
 
@@ -62,13 +53,19 @@ namespace nu {
 		}
 
 		//Updtae Collisions
-		UpdateCollisions();
+		//UpdateCollisions();
 
 		//Remove Destroyed Actors
+		for (auto& actor : m_actors) {
+			if (actor->m_destroyed) { actor->OnDestroy(); }
+		}
 		std::erase_if(m_actors, [](auto& actor) {return actor->m_destroyed; });
 
 		//Add Pending Actors
-		for (auto& actor : m_pendingActors) { m_actors.push_back(move(actor));}
+		for (auto& actor : m_pendingActors) { 
+			actor->Start();
+			m_actors.push_back(move(actor));
+		}
 		m_pendingActors.clear();
 	};
 
@@ -79,23 +76,24 @@ namespace nu {
 			}
 		}
 	}
-	void Scene::UpdateCollisions()
-	{
-		for (auto& actorA : m_actors) {
-			for (auto& actorB : m_actors) {
-				if (actorA == actorB || actorA-> m_destroyed || actorB->m_destroyed) continue;
 
-				auto colliderA = actorA->GetComponent<ColliderComponent>();
-				auto colliderB = actorB->GetComponent<ColliderComponent>();
+	//void Scene::UpdateCollisions()
+	//{
+	//	for (auto& actorA : m_actors) {
+	//		for (auto& actorB : m_actors) {
+	//			if (actorA == actorB || actorA-> m_destroyed || actorB->m_destroyed) continue;
 
-				if (!colliderA || !colliderB) continue;
+	//			auto colliderA = actorA->GetComponent<ColliderComponent>();
+	//			auto colliderB = actorB->GetComponent<ColliderComponent>();
 
-				//Check Collision
-				if (colliderA->CheckCollision(*colliderB)) {
-					actorA->OnCollision(actorB.get());
-					actorB->OnCollision(actorA.get());
-				}
-			}
-		}
-	};
+	//			if (!colliderA || !colliderB) continue;
+
+	//			//Check Collision
+	//			if (colliderA->CheckCollision(*colliderB)) {
+	//				actorA->OnCollision(actorB.get());
+	//				actorB->OnCollision(actorA.get());
+	//			}
+	//		}
+	//	}
+	//};
 }

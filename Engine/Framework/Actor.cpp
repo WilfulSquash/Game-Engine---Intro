@@ -15,7 +15,6 @@ namespace nu {
         Object{ other },
         m_tag{ other.m_tag },
         m_transform{ other.m_transform },
-        m_damping{ other.m_damping },
         m_lifespan{ other.m_lifespan }
     {
 		//clone components
@@ -25,7 +24,17 @@ namespace nu {
 			AddComponent(move(clone));
 		}
     }
-    
+    void Actor::Start() {
+        for (auto& component : m_components) {
+            component->Start();
+        }
+    };
+
+    void Actor::OnDestroy() {
+        for (auto& component : m_components) {
+            component->Destroyed();
+        }
+    };
 
     void Actor::Update(float dt) {
         //lifespan
@@ -39,8 +48,8 @@ namespace nu {
         }
 
         //physics
-        m_transform.position += (m_velocity * dt);
-        m_velocity *= 1.0f/((1.0f) + m_damping * dt);
+        //m_transform.position += (m_velocity * dt);
+        //m_velocity *= 1.0f/((1.0f) + m_damping * dt);
 
         m_transform.position.x = Wrap(0.0f, 1920.0f, m_transform.position.x);
         m_transform.position.y = Wrap(0.0f, 1024.0f, m_transform.position.y);
@@ -74,8 +83,7 @@ namespace nu {
 
 		JSON_READ_NAME(value, "tag", m_tag);
         JSON_READ_NAME(value, "lifespan", m_lifespan);
-        JSON_READ_NAME(value, "velocity", m_velocity);
-        JSON_READ_NAME(value, "damping", m_damping);
+        JSON_READ_NAME(value, "persistent", m_persistent);
 
         //Read actor compo
         if (JSON_HAS_NAME(value, "components")) {

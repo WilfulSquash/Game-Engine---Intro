@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "TextureFrames.h"
-#include "Serialization/Json.h"
+#include "../Engine/Serialization/Json.h"
 #include "Texture.h"
 
 namespace nu {
@@ -24,7 +24,7 @@ namespace nu {
 		JSON_READ_NAME(document, "columns", m_numColumns);
 		JSON_READ_NAME(document, "rows", m_numRows);
 		JSON_READ_NAME(document, "start_frame", m_startFrame);
-		JSON_READ_NAME(document, "totalFrames", m_totalFrames);
+		JSON_READ_NAME(document, "total_frames", m_totalFrames);
 		Vector2 textureSize = m_texture->GetSize();
 
 		if (m_numColumns <= 0 || m_numRows == 0) { 
@@ -32,15 +32,14 @@ namespace nu {
 			return false; 
 		}
 
-		m_frameSize = textureSize / Vector2{ static_cast<float>(m_numColumns), static_cast<float>(m_numRows) };
+		m_frameSize = textureSize / Vector2{ m_numColumns, m_numRows };
 
 		return true;
 	}
 	Rect TextureFrames::GetFrameRect(unsigned int frame)
 	{
-		if (frame >= static_cast<unsigned int>(m_totalFrames)) {
+		if (frame >= m_totalFrames) {
 			cerr << "Texture Frames frame " << frame << " is out of bounds.\n";
-			frame = 0;
 		}
 		int currentFrame = m_startFrame + frame;
 		int column = currentFrame % m_numColumns;
