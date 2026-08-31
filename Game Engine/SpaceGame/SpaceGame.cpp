@@ -12,9 +12,11 @@ using namespace std;
 
 bool SpaceGame::Initialize()
 {
+	SetWorkingDirectory("SpaceGame");
+
 	Game::Initialize();
 
-	m_scene = new Scene();
+	m_scene = make_unique<Scene>();
 	m_scene->SetGame(this);
 	m_scene->Load("data/scene.json");
 

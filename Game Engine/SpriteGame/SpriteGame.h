@@ -1,12 +1,11 @@
  #pragma once
-#include "../Engine/Framework/Game.h"
-#include "../Engine/Renderer/Text.h"
-#include "../Engine/Resources/ResourceManager.h"
+#include "Framework/Game.h"
+#include "Renderer/Text.h"
+#include "Resources/ResourceManager.h"
 
-class SpaceGame : public nu::Game {
+class SpriteGame : public nu::Game {
 public:
-	SpaceGame() = default;
-	SpaceGame(nu::Scene* scene) : Game(scene) {};
+	SpriteGame() = default;
 
 	bool Initialize() override;
 	void Update(float dt) override;

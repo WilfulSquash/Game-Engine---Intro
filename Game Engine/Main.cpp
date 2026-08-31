@@ -1,9 +1,10 @@
 #include "../Engine/Engine.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "Bullet.h"
-#include "Assets.h"
-#include "SpaceGame.h"
+#include "SpaceGame/Player.h"
+#include "SpaceGame/Enemy.h"
+#include "SpaceGame/Bullet.h"
+#include "SpaceGame/Assets.h"
+#include "SpaceGame/SpaceGame.h"
+#include "SpriteGame/SpriteGame.h"
 
 #include <fmod.hpp>
 #include <iostream>
@@ -23,8 +24,8 @@ int main(){
     //INITIALIZATION
     Engine::Get().Initialize();
 
-    SpaceGame game;
-    game.Initialize();
+    unique_ptr<Game> game = make_unique<SpriteGame>();
+    game->Initialize();
    
 	shared_ptr<Texture> texture = make_shared<Texture>();
 
@@ -45,13 +46,13 @@ int main(){
         //Engine
         Engine::Get().Update();
         
-        game.Update(Engine::Get().GetTime().GetDeltaTime());
+        game->Update(Engine::Get().GetTime().GetDeltaTime());
 
         //RENDER
         Engine::Get().GetRenderer().SetColorf(0.0f, 0.0f, 0.0f);
         Engine::Get().GetRenderer().Clear();
 		
-        game.Draw(Engine::Get().GetRenderer());
+        game->Draw(Engine::Get().GetRenderer());
         
         Engine::Get().GetPS().Draw(Engine::Get().GetRenderer());
         Engine::Get().GetRenderer().Present();
