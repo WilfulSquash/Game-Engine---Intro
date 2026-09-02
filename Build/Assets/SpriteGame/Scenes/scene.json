@@ -1,0 +1,187 @@
+{
+  "actors": [
+    {
+      "type": "Actor",
+      "prototype": true,
+      "name": "BatPrototype",
+      "tag": "Enemy",
+      "active": true,
+      "persistent": true,
+      "transform": {
+        "position": [ 200, 200 ],
+        "rotation": 0,
+        "scale": 3
+      },
+      "components": [
+        {
+          "type": "SpriteAnimatorRendererComponent",
+          "default_Animation": "run",
+          "animations": [
+            {
+              "name": "idle",
+              "texture_frames":"Animations/Goblin_Idle.json",
+              "fps": 10,
+              "loop": true
+            }
+          ],
+          "texture_frames": "Animations/Goblin_Idle.json",
+          "fps": 10,
+          "loop": true
+        }
+      ]
+    },
+    {
+      "name": "PlayerPrototype",
+      "type": "PlayerController",
+      "prototype": true,
+      "tag": "Player",
+      "active": true,
+      "speed": 600,
+      "velocity": [ 0, 0 ],
+      "texture": "Textures/player.png",
+      "transform": {
+        "position": [ 640, 512 ],
+        "rotation": 0,
+        "scale": 1
+      },
+      "components": [
+        {
+          "type": "SpriteAnimatorRendererComponent",
+          "default_Animation": "idle",
+          "animations": [
+            {
+              "name": "idle",
+              "texture_frames": "Animations/Goblin_Idle.json",
+              "fps": 10,
+              "loop": true
+            },
+            {
+              "name": "run",
+              "texture_frames": "Animations/Goblin_Run.json",
+              "fps": 10,
+              "loop": true
+            }
+          ]
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 2.0,
+          "angular_damping": 2.0,
+          "shape": "capsule",
+          "constraint_angle":  true,
+          "size": [ 48, 48 ],
+          "gravity_scale": 1
+        }
+      ]
+    },
+    {
+      "name": "EnemyPrototype",
+      "type": "EnemyController",
+      "prototype": true,
+      "tag": "Enemy",
+      "active": true,
+      "speed": 600,
+      "velocity": [ 0, 0 ],
+      "texture": "Textures/enemy.png",
+      "transform": {
+        "position": [ 640, 512 ],
+        "rotation": 0,
+        "scale": 1
+      },
+      "components": [
+        {
+          "type": "SpriteAnimatorRendererComponent",
+          "default_Animation": "idle",
+          "animations": [
+            {
+              "name": "idle",
+              "texture_frames": "Animations/Goblin_Idle.json",
+              "fps": 10,
+              "loop": true
+            },
+            {
+              "name": "run",
+              "texture_frames": "Animations/Goblin_Run.json",
+              "fps": 10,
+              "loop": true
+            }
+          ]
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 2.0,
+          "angular_damping": 2.0,
+          "shape": "capsule",
+          "constraint_angle": true,
+          "size": [ 48, 48 ],
+          "gravity_scale": 1
+        }
+      ]
+    },
+    {
+      "name": "FlyingEnemyPrototype",
+      "type": "FlyingEnemyController",
+      "prototype": true,
+      "tag": "Enemy",
+      "active": true,
+      "speed": 600,
+      "velocity": [ 0, 0 ],
+      "texture": "Textures/enemy.png",
+      "transform": {
+        "position": [ 640, 512 ],
+        "rotation": 0,
+        "scale": 1
+      },
+      "components": [
+        {
+          "type": "SpriteAnimatorRendererComponent",
+          "default_Animation": "idle",
+          "animations": [
+            {
+              "name": "idle",
+              "texture_frames": "Animations/Goblin_Idle.json",
+              "fps": 10,
+              "loop": true
+            },
+            {
+              "name": "run",
+              "texture_frames": "Animations/Goblin_Run.json",
+              "fps": 10,
+              "loop": true
+            }
+          ]
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 2.0,
+          "angular_damping": 2.0,
+          "shape": "capsule",
+          "constraint_angle": true,
+          "size": [ 48, 48 ],
+          "gravity_scale": 0,
+          "is_sensor": true
+        }
+      ]
+    },
+    {
+      "name": "AsteroidPrototype",
+      "type": "Asteroid",
+      "prototype": true,
+      "tag": "Asteroid",
+      "active": true,
+      "lifespan": 3.0,
+      "speed": 0,
+      "texture": "Textures/asteroid.png",
+      "transform": {
+        "rotation": 0,
+        "scale": 1
+      },
+      "components": [
+        {
+          "type": "SpriteRendererComponent",
+          "texture": "Textures/asteroid.png"
+        }
+      ]
+    }
+  ]
+}

@@ -15,7 +15,7 @@ bool SpriteGame::Initialize()
 
 	m_scene = make_unique<Scene>();
 	m_scene->SetGame(this);
-	m_scene->Load("data/scene.json");
+	m_scene->Load("scenes/scene.json");
 
 	Engine::Get().GetAudio().AddSound("music", "audio/background.mp3");
 	Engine::Get().GetAudio().PlaySound("music");
@@ -52,6 +52,7 @@ void SpriteGame::Update(float dt)
 		m_stateTimer -= dt;
 		if (m_stateTimer <= 0) {
 			m_scene->RemoveAllActors();
+			m_scene->Load("scenes/level.json");
 			SpawnPlayer();
 			m_spawnTime = 5.0f;
 			m_gameState = GameState::Game;
@@ -81,6 +82,8 @@ void SpriteGame::Update(float dt)
 
 void SpriteGame::Draw(nu::Renderer& renderer)
 {
+	renderer.EnableCamera(false);
+
 	renderer.DrawTexture(*Resources().Get<Texture>("Textures/background.png", Engine::Get().GetRenderer()), 1, 1, 0.0f, 25.0f);
 	switch (m_gameState)
 	{
@@ -101,6 +104,7 @@ void SpriteGame::Draw(nu::Renderer& renderer)
 	default:
 		break;
 	}
+	renderer.EnableCamera();
 
 	Game::Draw(renderer);
 }

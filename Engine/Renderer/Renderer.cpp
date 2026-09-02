@@ -37,6 +37,7 @@ namespace nu {
             return false;
         }
 
+		SDL_SetDefaultTextureScaleMode(m_renderer, SDL_SCALEMODE_PIXELART);
         SDL_SetRenderVSync(m_renderer, 1);
 
         return true;
@@ -105,17 +106,23 @@ namespace nu {
     {
         Vector2 size = texture.GetSize();
 
+        float cameraX = (m_cameraEnabled) ? (m_camera.x - m_width * 0.5f): 0.0f;
+        float cameraY = (m_cameraEnabled) ? (m_camera.y - m_height * 0.5f): 0.0f;
+
         SDL_FRect destRect;
         destRect.h = /*TODO: get size x */size.x * scale;
         destRect.w = /*TODO: get size x */size.y * scale;
-        destRect.x = x - (destRect.w * 0.5f);
-        destRect.y = y - (destRect.h * 0.5f);
+        destRect.x = (x - cameraX) - (destRect.w * 0.5f);
+        destRect.y = (y - cameraY) - (destRect.h * 0.5f);
        
         // https://wiki.libsdl.org/SDL3/SDL_RenderTexture
         SDL_RenderTextureRotated(m_renderer, texture.m_texture, NULL, &destRect, angle, NULL, (flipH) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
     }
 
     void Renderer::DrawTexture(const Texture& texture, const Rect& source, float x, float y, float angle, float scale, bool flipH) const {
+        float cameraX = (m_cameraEnabled) ? (m_camera.x - m_width * 0.5f) : 0.0f;
+        float cameraY = (m_cameraEnabled) ? (m_camera.y - m_height * 0.5f) : 0.0f;
+
         SDL_FRect sourceRect;
         sourceRect.x = source.x;
         sourceRect.y = source.y;
@@ -125,8 +132,8 @@ namespace nu {
         SDL_FRect destRect;
         destRect.h = /*TODO: get size x */source.w * scale;
         destRect.w = /*TODO: get size x */source.h * scale;
-        destRect.x = x - (destRect.w * 0.5f);
-        destRect.y = y - (destRect.h * 0.5f);
+        destRect.x = (x - cameraX) - (destRect.w * 0.5f);
+        destRect.y = (y - cameraY) - (destRect.h * 0.5f);
 
         // https://wiki.libsdl.org/SDL3/SDL_RenderTexture
         SDL_RenderTextureRotated(m_renderer, texture.m_texture, &sourceRect, &destRect, angle, NULL, (flipH) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
