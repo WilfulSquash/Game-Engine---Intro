@@ -34,6 +34,15 @@ namespace nu {
 
 		m_frameSize = textureSize / Vector2{ m_numColumns, m_numRows };
 
+		unsigned int frameCapacity = m_numColumns * m_numRows;
+
+		if (m_startFrame + m_totalFrames > frameCapacity)
+		{
+			cerr << "Texture Frames range is out of bounds: "
+				<< filename << endl;
+			return false;
+		}
+
 		return true;
 	}
 	Rect TextureFrames::GetFrameRect(unsigned int frame)

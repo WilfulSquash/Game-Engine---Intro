@@ -9,7 +9,7 @@ namespace nu
 	bool Physics::Initialize()
 	{
 		b2WorldDef worldDef = b2DefaultWorldDef();
-		worldDef.gravity = b2Vec2{ 0.0f, 10.0f };
+		worldDef.gravity = b2Vec2{ 0.0f, 40.0f };
 		m_worldId = b2CreateWorld(&worldDef);
 
 		return true;
@@ -39,10 +39,10 @@ namespace nu
 			b2BodyId bodyB = b2Shape_GetBody(contactEvent->shapeIdB);
 
 			Actor* actorA = (Actor*)b2Body_GetUserData(bodyA);
-			if (!actorA || actorA->GetDestroyed() || actorA->IsActive())continue;
+			if (!actorA || actorA->GetDestroyed() || !actorA->IsActive())continue;
 
 			Actor* actorB = (Actor*)b2Body_GetUserData(bodyB);
-			if (!actorB || actorB->GetDestroyed() || actorB->IsActive())continue;
+			if (!actorB || actorB->GetDestroyed() || !actorB->IsActive())continue;
 
 			actorA->OnCollision(actorB);
 			actorB->OnCollision(actorA);

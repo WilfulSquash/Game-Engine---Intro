@@ -47,11 +47,16 @@ namespace nu
 
 				// set source rect from id
 				Rect sourceRect = m_tilemap->GetTileRect(layer, tileId);
-				// set position from owner transform position + tile position * owner transform scale
-				transform.position = GetOwner()->GetTransform().position + (m_tilemap->GetTilePosition(layer, i) * transform.scale);
-
 				// size of physics body is tehe source rect
 				Vector2 size{ sourceRect.w, sourceRect.h };
+				// set position from owner transform position + tile position * owner transform scale
+				//transform.position = GetOwner()->GetTransform().position + (m_tilemap->GetTilePosition(layer, i) * transform.scale);
+				transform.position = GetOwner()->GetTransform().position +
+					(m_tilemap->GetTilePosition(layer, i) * transform.scale) +
+					Vector2{
+						size.x * 0.5f,
+						size.y * 0.5f
+					};
 
 				// create physics body and add to physics bodies container
 				auto physicsBody = std::make_unique<PhysicsBody>(transform, size, bodyDef, Engine::Get().GetPhysics());

@@ -15,18 +15,21 @@
       "components": [
         {
           "type": "SpriteAnimatorRendererComponent",
-          "default_Animation": "run",
+          "default_animation": "idle",
           "animations": [
             {
               "name": "idle",
-              "texture_frames":"Animations/Goblin_Idle.json",
+              "texture_frames": "Animations/bat_idle.json",
+              "fps": 10,
+              "loop": true
+            },
+            {
+              "name": "run",
+              "texture_frames": "Animations/bat_idle.json",
               "fps": 10,
               "loop": true
             }
-          ],
-          "texture_frames": "Animations/Goblin_Idle.json",
-          "fps": 10,
-          "loop": true
+          ]
         }
       ]
     },
@@ -38,7 +41,7 @@
       "active": true,
       "speed": 600,
       "velocity": [ 0, 0 ],
-      "texture": "Textures/player.png",
+      "texture": "Textures/hero.png",
       "transform": {
         "position": [ 640, 512 ],
         "rotation": 0,
@@ -47,19 +50,32 @@
       "components": [
         {
           "type": "SpriteAnimatorRendererComponent",
-          "default_Animation": "idle",
+          "default_animation": "idle",
+          "origin": [0.5, 0.6],
           "animations": [
             {
               "name": "idle",
-              "texture_frames": "Animations/Goblin_Idle.json",
+              "texture_frames": "Animations/hero_idle.json",
               "fps": 10,
               "loop": true
             },
             {
               "name": "run",
-              "texture_frames": "Animations/Goblin_Run.json",
+              "texture_frames": "Animations/hero_run.json",
               "fps": 10,
               "loop": true
+            },
+            {
+              "name": "attack",
+              "texture_frames": "Animations/hero_attack.json",
+              "fps": 10,
+              "loop": false
+            },
+            {
+              "name": "death",
+              "texture_frames": "Animations/hero_death.json",
+              "fps": 10,
+              "loop": false
             }
           ]
         },
@@ -81,29 +97,42 @@
       "tag": "Enemy",
       "active": true,
       "speed": 600,
+      "health": 15,
       "velocity": [ 0, 0 ],
       "texture": "Textures/enemy.png",
       "transform": {
         "position": [ 640, 512 ],
         "rotation": 0,
-        "scale": 1
+        "scale": 2.5
       },
       "components": [
         {
           "type": "SpriteAnimatorRendererComponent",
-          "default_Animation": "idle",
+          "default_animation": "idle",
           "animations": [
             {
               "name": "idle",
-              "texture_frames": "Animations/Goblin_Idle.json",
+              "texture_frames": "Animations/enemy_idle.json",
               "fps": 10,
               "loop": true
             },
             {
               "name": "run",
-              "texture_frames": "Animations/Goblin_Run.json",
+              "texture_frames": "Animations/enemy_run.json",
               "fps": 10,
               "loop": true
+            },
+            {
+              "name": "attack",
+              "texture_frames": "Animations/enemy_attack.json",
+              "fps": 10,
+              "loop": false
+            },
+            {
+              "name": "hit",
+              "texture_frames": "Animations/enemy_hit.json",
+              "fps": 10,
+              "loop": false
             }
           ]
         },
@@ -125,8 +154,9 @@
       "tag": "Enemy",
       "active": true,
       "speed": 600,
+      "health":  15,
       "velocity": [ 0, 0 ],
-      "texture": "Textures/enemy.png",
+      "texture": "Textures/eye.png",
       "transform": {
         "position": [ 640, 512 ],
         "rotation": 0,
@@ -135,19 +165,25 @@
       "components": [
         {
           "type": "SpriteAnimatorRendererComponent",
-          "default_Animation": "idle",
+          "default_animation": "idle",
           "animations": [
             {
               "name": "idle",
-              "texture_frames": "Animations/Goblin_Idle.json",
+              "texture_frames": "Animations/eye_idle.json",
               "fps": 10,
               "loop": true
             },
             {
-              "name": "run",
-              "texture_frames": "Animations/Goblin_Run.json",
+              "name": "attack",
+              "texture_frames": "Animations/eye_attack.json",
               "fps": 10,
-              "loop": true
+              "loop": false
+            },
+            {
+              "name": "hit",
+              "texture_frames": "Animations/eye_hit.json",
+              "fps": 10,
+              "loop": false
             }
           ]
         },
@@ -155,7 +191,7 @@
           "type": "Box2DPhysicsComponent",
           "linear_damping": 2.0,
           "angular_damping": 2.0,
-          "shape": "capsule",
+          "shape": "circle",
           "constraint_angle": true,
           "size": [ 48, 48 ],
           "gravity_scale": 0,
@@ -180,6 +216,36 @@
         {
           "type": "SpriteRendererComponent",
           "texture": "Textures/asteroid.png"
+        }
+      ]
+    },
+    {
+      "name": "DamagerPrototype",
+      "type": "Damager",
+      "prototype": true,
+      "tag": "Enemy",
+      "damage": 5,
+      "lifespan": 0.1,
+      "active": false,
+      "transform": {
+        "position": [ 640, 512 ],
+        "rotation": 0,
+        "scale": 1
+      },
+      "components": [
+        {
+          "type": "SpriteRendererComponent",
+          "texture": "Textures/damager.png"
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 2.0,
+          "angular_damping": 2.0,
+          "shape": "circle",
+          "constraint_angle": true,
+          "size": [ 48, 48 ],
+          "gravity_scale": 0,
+          "is_sensor": true
         }
       ]
     }

@@ -63,7 +63,7 @@ void SpriteGame::Update(float dt)
 		if (m_spawnTimer <= 0.0f) { 
 			m_spawnTimer = m_spawnTime;  
 			SpawnEnemy(); 
-			SpawnRock();
+			//SpawnRock();
 		}
 		break;
 	case SpriteGame::GameState::GameOver:
@@ -84,7 +84,7 @@ void SpriteGame::Draw(nu::Renderer& renderer)
 {
 	renderer.EnableCamera(false);
 
-	renderer.DrawTexture(*Resources().Get<Texture>("Textures/background.png", Engine::Get().GetRenderer()), 1, 1, 0.0f, 25.0f);
+	renderer.DrawTexture(*Resources().Get<Texture>("Textures/bg03.png", Engine::Get().GetRenderer()), 1, 1, 0.0f, 25.0f);
 	switch (m_gameState)
 	{
 	case SpriteGame::GameState::Title:
@@ -134,7 +134,6 @@ void SpriteGame::SpawnEnemy()
 void SpriteGame::SpawnRock()
 {
 	auto actor = Factory::Instance().Create<Actor>("AsteroidPrototype");
-	Factory::Instance().Register<Actor>("Asteroid");
 	actor->SetTransform(Transform{ Vector2{RandomFloat((float)Engine::Get().GetRenderer().GetWidth()), RandomFloat((float)Engine::Get().GetRenderer().GetHeight())}, 0.0f, 1.0f });
 	m_scene->AddActor(move(actor));
 }

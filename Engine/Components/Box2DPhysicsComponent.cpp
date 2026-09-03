@@ -37,7 +37,7 @@ namespace nu {
 		JSON_READ_NAME(value, "gravity_scale", m_bodyDef.gravityScale);
 		JSON_READ_NAME(value, "linear_damping", m_bodyDef.linearDamping);
 		JSON_READ_NAME(value, "angular_damping", m_bodyDef.angularDamping);
-		JSON_READ_NAME(value, "constrain_angle", m_bodyDef.constrainAngle);
+		JSON_READ_NAME(value, "constraint_angle", m_bodyDef.constrainAngle);
 		JSON_READ_NAME(value, "is_dynamic", m_bodyDef.isDynamic);
 		JSON_READ_NAME(value, "friction", m_bodyDef.friction);
 		JSON_READ_NAME(value, "restitution", m_bodyDef.restitution);
