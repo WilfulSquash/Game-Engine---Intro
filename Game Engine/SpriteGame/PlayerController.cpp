@@ -32,11 +32,11 @@ void PlayerController::Update(float dt)
 		if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) dir = -1.0f;
 		if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)) dir = +1.0f;
 		if (Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_SPACE)) {
-			velocity.y = -800.0f;
+			velocity.y = -1000.0f;
 		}
 
 		if (dir != 0.0f) {
-			velocity.x = dir * 1000.0f;
+			velocity.x = dir * 100.0f;
 			m_rendererComponent->Play("run");
 			m_rendererComponent->SetFlipH(dir < 0.0f);
 		}

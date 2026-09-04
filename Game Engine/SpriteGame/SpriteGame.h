@@ -25,6 +25,7 @@ public:
 private:
 	void SpawnPlayer();
 	void SpawnEnemy();
+	void SpawnFlyingEnemy();
 	void SpawnRock();
 
 	int m_score{ 0 };

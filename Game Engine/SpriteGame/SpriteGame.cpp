@@ -63,6 +63,7 @@ void SpriteGame::Update(float dt)
 		if (m_spawnTimer <= 0.0f) { 
 			m_spawnTimer = m_spawnTime;  
 			SpawnEnemy(); 
+			SpawnFlyingEnemy(); 
 			//SpawnRock();
 		}
 		break;
@@ -127,6 +128,13 @@ void SpriteGame::SpawnPlayer()
 void SpriteGame::SpawnEnemy()
 {
 	auto actor = Factory::Instance().Create<Actor>("EnemyPrototype");
+	actor->SetTransform(Transform{ Vector2{RandomFloat((float)Engine::Get().GetRenderer().GetWidth()), RandomFloat((float)Engine::Get().GetRenderer().GetHeight())}, 0.0f, 1.0f });
+	m_scene->AddActor(move(actor));
+}
+
+void SpriteGame::SpawnFlyingEnemy()
+{
+	auto actor = Factory::Instance().Create<Actor>("FlyingEnemyPrototype");
 	actor->SetTransform(Transform{ Vector2{RandomFloat((float)Engine::Get().GetRenderer().GetWidth()), RandomFloat((float)Engine::Get().GetRenderer().GetHeight())}, 0.0f, 1.0f });
 	m_scene->AddActor(move(actor));
 }

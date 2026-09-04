@@ -8,7 +8,7 @@
       "active": true,
       "persistent": true,
       "transform": {
-        "position": [ 200, 200 ],
+        "position": [ 200, 201 ],
         "rotation": 0,
         "scale": 3
       },
@@ -45,7 +45,7 @@
       "transform": {
         "position": [ 640, 512 ],
         "rotation": 0,
-        "scale": 1
+        "scale": 4
       },
       "components": [
         {
@@ -85,7 +85,7 @@
           "angular_damping": 2.0,
           "shape": "capsule",
           "constraint_angle":  true,
-          "size": [ 48, 48 ],
+          "size": [ 48, 47 ],
           "gravity_scale": 1
         }
       ]
@@ -103,7 +103,7 @@
       "transform": {
         "position": [ 640, 512 ],
         "rotation": 0,
-        "scale": 2.5
+        "scale": 3
       },
       "components": [
         {
@@ -142,7 +142,7 @@
           "angular_damping": 2.0,
           "shape": "capsule",
           "constraint_angle": true,
-          "size": [ 48, 48 ],
+          "size": [ 48, 47 ],
           "gravity_scale": 1
         }
       ]
@@ -160,7 +160,7 @@
       "transform": {
         "position": [ 640, 512 ],
         "rotation": 0,
-        "scale": 1
+        "scale": 3
       },
       "components": [
         {
@@ -193,7 +193,7 @@
           "angular_damping": 2.0,
           "shape": "circle",
           "constraint_angle": true,
-          "size": [ 48, 48 ],
+          "size": [ 48, 47 ],
           "gravity_scale": 0,
           "is_sensor": true
         }
