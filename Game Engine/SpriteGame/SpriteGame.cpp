@@ -62,7 +62,7 @@ void SpriteGame::Update(float dt)
 		m_spawnTimer -= dt;
 		if (m_spawnTimer <= 0.0f) { 
 			m_spawnTimer = m_spawnTime;  
-			SpawnEnemy(); 
+			//SpawnEnemy(); 
 			SpawnFlyingEnemy(); 
 			//SpawnRock();
 		}

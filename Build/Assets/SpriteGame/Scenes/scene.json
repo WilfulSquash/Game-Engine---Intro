@@ -6,6 +6,7 @@
       "name": "BatPrototype",
       "tag": "Enemy",
       "active": true,
+      "health": 15,
       "persistent": true,
       "transform": {
         "position": [ 200, 201 ],
@@ -40,6 +41,7 @@
       "tag": "Player",
       "active": true,
       "speed": 600,
+      "health": 15,
       "velocity": [ 0, 0 ],
       "texture": "Textures/hero.png",
       "transform": {
@@ -51,7 +53,7 @@
         {
           "type": "SpriteAnimatorRendererComponent",
           "default_animation": "idle",
-          "origin": [0.5, 0.6],
+          "origin": [ 0.5, 0.6 ],
           "animations": [
             {
               "name": "idle",
@@ -84,7 +86,7 @@
           "linear_damping": 2.0,
           "angular_damping": 2.0,
           "shape": "capsule",
-          "constraint_angle":  true,
+          "constraint_angle": true,
           "size": [ 48, 47 ],
           "gravity_scale": 1
         }
@@ -154,7 +156,7 @@
       "tag": "Enemy",
       "active": true,
       "speed": 600,
-      "health":  15,
+      "health":  5,
       "velocity": [ 0, 0 ],
       "texture": "Textures/eye.png",
       "transform": {
